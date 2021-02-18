@@ -10,7 +10,8 @@ class User(AbstractUser):
 
 class Followers(models.Model):
   creator = models.ForeignKey(User, on_delete=models.CASCADE)
-  followers = models.ManyToManyField('User', blank=True, related_name="following")
+  followers = models.ManyToManyField(User, blank=True, related_name="following")
+  # count = models.IntegerField(default=0)
 
   def __str__(self):
         return f"{self.user}"
