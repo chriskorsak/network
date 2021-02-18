@@ -1,0 +1,7 @@
+/* wrapper for all posts, including new post at top of page */
+div.post {
+  border: 1px solid rgb(175, 175, 175);
+  border-radius: 5px;
+  padding: 2%;
+  margin: 2%;
+}
