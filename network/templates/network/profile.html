@@ -1,11 +1,12 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+  <h1>{{ profileUsername }}</h1>
   <!-- follow/unfollow profile button -->
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and user.username != profileUsername %}
     <form action="{% url 'follow-unfollow' profileUsername %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="{{ follow_message }}" class="btn btn-sm btn-primary">
+      <input type="submit" value="{{ followMessage }}" class="btn btn-sm btn-primary">
     </form>
   {% endif %}
 
