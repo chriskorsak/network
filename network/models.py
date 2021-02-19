@@ -3,7 +3,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-  posts = models.ManyToManyField('Post', blank=True)
   followers = models.ManyToManyField('User', blank=True, related_name="following")
 
   def __str__(self):
@@ -13,7 +12,7 @@ class Post(models.Model):
   creator = models.ForeignKey(User, on_delete=models.CASCADE)
   date = models.DateTimeField(auto_now_add=True)
   text = models.CharField(max_length=280)
-  likes = models.IntegerField(default=0)  
+  likes = models.ManyToManyField(User, blank=True, related_name="likedbyuser")
 
   def __str__(self):
         return f"{self.creator} {self.date} {self.likes}"

@@ -78,10 +78,34 @@ def new_post(request):
     return HttpResponseRedirect(reverse("index"))
 
 def profile(request, username):
-  #get username from profile link
-  username = User.objects.get(username=username)
+  #get user info of profile
+  user = User.objects.get(username=username)
+
+  #get follower count
+  followerCount = user.followers.all().count()
+  #get profile username
+  profileUsername = user.username
+
   #get all user posts to populate profile
-  profilePosts = Post.objects.filter(creator=username).order_by('-date')
+  profilePosts = Post.objects.filter(creator=user).order_by('-date')
+
   return render(request, "network/profile.html", {
-    "profilePosts": profilePosts
+    "profileUsername": profileUsername,
+    "profilePosts": profilePosts,
+    "followerCount": followerCount
   })
+
+def follow_unfollow(request, username):
+  if request.method == "POST":
+    #get user and profile to be followed/unfollowed
+    user = request.user
+    profile = User.objects.get(username=username)
+
+    if user.following.filter(username=username):
+      user.following.remove(profile)
+      print('already following!!!')
+    else:
+      user.following.add(profile)
+      print("not following yet")
+
+  return HttpResponseRedirect(reverse("profile", args=(username,)))
