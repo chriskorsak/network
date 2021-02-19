@@ -16,5 +16,5 @@ class Post(models.Model):
   likes = models.IntegerField(default=0)  
 
   def __str__(self):
-        return f"{self.user} {self.date} {self.likes}"
+        return f"{self.creator} {self.date} {self.likes}"
 

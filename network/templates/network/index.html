@@ -6,7 +6,7 @@
     <section>
       <div class="post">
         <h2>New Post</h2>
-        <form action="/new-post" method="POST">
+        <form action="{% url 'new-post' %}" method="POST">
           {% csrf_token %}
           <div class="form-group">
             <textarea class="form-control" name="new-post-text" id="new-post-text"></textarea>
@@ -20,7 +20,7 @@
   <section>
     {% for post in posts %}
       <div class="post">
-        <p>{{ post.creator.username }}</p>
+        <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
         <p>{{ post.text }}</p>
         <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
       </div>
