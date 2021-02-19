@@ -1,5 +1,20 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-  {{ profilePosts }}
+  <!-- follow/unfollow profile
+  {% if user.is_authenticated %}
+    <form action="{% url 'follow-unfollow' user.id %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="{{ follow_message }}" class="btn btn-sm btn-primary">
+    </form>
+  {% endif %} -->
+
+  <!-- list all profile posts -->
+  {% for post in profilePosts %}
+      <div class="post">
+        <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
+        <p>{{ post.text }}</p>
+        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
+      </div>
+    {% endfor %}
 {% endblock %}

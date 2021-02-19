@@ -78,11 +78,10 @@ def new_post(request):
     return HttpResponseRedirect(reverse("index"))
 
 def profile(request, username):
-  #get username and then id from url
+  #get username from profile link
   username = User.objects.get(username=username)
-  id = username.id
   #get all user posts to populate profile
-  profilePosts = Post.objects.filter(creator=username)
+  profilePosts = Post.objects.filter(creator=username).order_by('-date')
   return render(request, "network/profile.html", {
     "profilePosts": profilePosts
   })
