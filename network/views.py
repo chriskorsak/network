@@ -91,19 +91,27 @@ def profile(request, username):
   #get all user posts to populate profile
   profilePosts = Post.objects.filter(creator=profile).order_by('-date')
 
-  #follow/unfollow button text
-  if user.following.filter(username=username):
-    followMessage = "Unfollow"
-  else:
-    followMessage = "Follow"
+  if request.user.is_authenticated:
+    #follow/unfollow button text
+    if user.following.filter(username=username):
+      followMessage = "Unfollow"
+    else:
+      followMessage = "Follow"
 
-  return render(request, "network/profile.html", {
-    "profileUsername": profileUsername,
-    "profilePosts": profilePosts,
-    "followerCount": followerCount,
-    "followingCount": followingCount,
-    "followMessage": followMessage
-  })
+    return render(request, "network/profile.html", {
+      "profileUsername": profileUsername,
+      "profilePosts": profilePosts,
+      "followerCount": followerCount,
+      "followingCount": followingCount,
+      "followMessage": followMessage
+    })
+  else:
+    return render(request, "network/profile.html", {
+      "profileUsername": profileUsername,
+      "profilePosts": profilePosts,
+      "followerCount": followerCount,
+      "followingCount": followingCount,
+    })
 
 def follow_unfollow(request, username):
   if request.method == "POST":
