@@ -125,3 +125,15 @@ def follow_unfollow(request, username):
       user.following.add(profile)
 
   return HttpResponseRedirect(reverse("profile", args=(username,)))
+
+@login_required(login_url='login')
+def following(request):
+  user = request.user
+  #get all profiles user is following
+  following = user.following.all()
+  #get all posts from profiles the user is following
+  posts = Post.objects.filter(creator__in=following).order_by('-date')
+  
+  return render(request, "network/following.html", {
+    "posts": posts
+  })
