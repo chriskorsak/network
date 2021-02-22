@@ -84,6 +84,8 @@ def profile(request, username):
   profile = User.objects.get(username=username)
   #get follower count
   followerCount = profile.followers.all().count()
+  #get following count
+  followingCount = profile.following.all().count()
   #get profile username
   profileUsername = profile.username
   #get all user posts to populate profile
@@ -99,6 +101,7 @@ def profile(request, username):
     "profileUsername": profileUsername,
     "profilePosts": profilePosts,
     "followerCount": followerCount,
+    "followingCount": followingCount,
     "followMessage": followMessage
   })
 
