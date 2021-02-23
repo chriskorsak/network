@@ -8,7 +8,13 @@
       <div class="post">
         <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
         <p>{{ post.text }}</p>
-        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
+        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes.count }}</span>
+        {% if post.creator.username == user.username %}
+          <div>  
+            <button type="button" class="btn btn-secondary btn-sm" id="edit" name="edit">Edit</button>
+          </div>
+        {% endif %}
+
       </div>
     {% endfor %}
   </section>

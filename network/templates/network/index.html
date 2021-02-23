@@ -1,8 +1,10 @@
 {% extends "network/layout.html" %}
 
+
 {% block body %}
   <h1>All Posts</h1>
   {% if user.is_authenticated %}
+  <!-- create new post section -->
     <section>
       <div class="post">
         <h2>New Post</h2>
@@ -17,25 +19,23 @@
     </section>
   {% endif %}
 
-  <!-- <section>
-    {% for post in posts %}
-      <div class="post">
-        <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
-        <p>{{ post.text }}</p>
-        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
-      </div>
-    {% endfor %}
-  </section> -->
     <section>
+    <!-- display all posts -->
     {% for post in page_obj %}
       <div class="post">
         <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
         <p>{{ post.text }}</p>
-        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
+        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes.count }}</span>
+        {% if post.creator.username == user.username %}
+          <div>  
+            <button type="button" class="btn btn-secondary btn-sm" id="edit" name="edit">Edit</button>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </section>
 
+  <!-- navigation  -->
   <nav class="pagination">
     <ul class="pagination">
       {% if page_obj.has_previous %}
