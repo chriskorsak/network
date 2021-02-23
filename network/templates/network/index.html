@@ -1,10 +1,11 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 
 {% block body %}
   <h1>All Posts</h1>
   {% if user.is_authenticated %}
-  <!-- create new post section -->
+  <!-- create a new post section -->
     <section>
       <div class="post">
         <h2>New Post</h2>
@@ -24,13 +25,11 @@
     {% for post in page_obj %}
       <div class="post">
         <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
-        <p>{{ post.text }}</p>
-        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes.count }}</span>
         {% if post.creator.username == user.username %}
-          <div>  
-            <button type="button" class="btn btn-secondary btn-sm" id="edit" name="edit">Edit</button>
-          </div>
+          <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
         {% endif %}
+        <p class='post-text'>{{ post.text }}</p>
+        <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes.count }}</span>
       </div>
     {% endfor %}
   </section>
@@ -56,4 +55,8 @@
     </ul>
   </nav>
 
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/scripts.js' %}"></script>
 {% endblock %}
