@@ -14,11 +14,30 @@
   <p>Following: <strong>{{ followingCount }}</strong></p>
 
   <!-- list all profile posts -->
-  {% for post in profilePosts %}
+  {% for post in page_obj %}
     <div class="post">
       <a href="{% url 'profile' profileUsername %}">{{ post.creator.username }}</a>
       <p>{{ post.text }}</p>
       <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes }}</span>
     </div>
   {% endfor %}
+  
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+
 {% endblock %}

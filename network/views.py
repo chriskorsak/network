@@ -4,14 +4,21 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 from .models import *
 
 
 def index(request):
-    return render(request, "network/index.html", {
-      "posts": Post.objects.all().order_by('-date')
-    })
+  #get all posts
+  posts = Post.objects.all().order_by('-date')
+  paginator = Paginator(posts, 10) # Show 10 posts per page.
+  page_number = request.GET.get('page')
+  page_obj = paginator.get_page(page_number)
+
+  return render(request, "network/index.html", {
+    'page_obj': page_obj
+  })
 
 
 def login_view(request):
@@ -88,8 +95,12 @@ def profile(request, username):
   followingCount = profile.following.all().count()
   #get profile username
   profileUsername = profile.username
+  
   #get all user posts to populate profile
   profilePosts = Post.objects.filter(creator=profile).order_by('-date')
+  paginator = Paginator(profilePosts, 10) # Show 10 posts per page.
+  page_number = request.GET.get('page')
+  page_obj = paginator.get_page(page_number)
 
   if request.user.is_authenticated:
     #follow/unfollow button text
@@ -100,7 +111,7 @@ def profile(request, username):
 
     return render(request, "network/profile.html", {
       "profileUsername": profileUsername,
-      "profilePosts": profilePosts,
+      'page_obj': page_obj,
       "followerCount": followerCount,
       "followingCount": followingCount,
       "followMessage": followMessage
@@ -108,7 +119,7 @@ def profile(request, username):
   else:
     return render(request, "network/profile.html", {
       "profileUsername": profileUsername,
-      "profilePosts": profilePosts,
+      'page_obj': page_obj,
       "followerCount": followerCount,
       "followingCount": followingCount,
     })
@@ -131,9 +142,14 @@ def following(request):
   user = request.user
   #get all profiles user is following
   following = user.following.all()
+  
   #get all posts from profiles the user is following
   posts = Post.objects.filter(creator__in=following).order_by('-date')
-  
+  paginator = Paginator(posts, 10) # Show 10 posts per page.
+  page_number = request.GET.get('page')
+  page_obj = paginator.get_page(page_number)
+
+
   return render(request, "network/following.html", {
-    "posts": posts
+    'page_obj': page_obj
   })
