@@ -159,7 +159,6 @@ def following(request):
 @csrf_exempt
 @login_required(login_url='login')
 def edit_post(request, postId):
-  # print(f"FROM DJANGO PARAMETER:{postId}")
   user = request.user
   post = Post.objects.get(pk=postId)
 
@@ -167,9 +166,10 @@ def edit_post(request, postId):
   if user.username == post.creator.username:
     data = json.loads(request.body)
     updatedPostText = data.get('postText')
+    #update post object with updated post text and save to database
     post.text = updatedPostText
     post.save()
-    # data.get('postId')
+    
     return JsonResponse({"response": "Post updated and saved."})
   else:
     return JsonResponse({"response": "You are not the post creator. You can't edit this post."})
