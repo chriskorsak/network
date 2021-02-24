@@ -11,5 +11,7 @@ urlpatterns = [
     path("new-post", views.new_post, name="new-post"),
     path("profile/<str:username>", views.profile, name="profile"),
     path("follow-unfollow/<str:username>", views.follow_unfollow, name="follow-unfollow"),
-    path("following", views.following, name="following")
+    path("following", views.following, name="following"),
+    # routes using javascript
+    path("edit-post/<int:postId>", views.edit_post, name="edit-post")
 ]

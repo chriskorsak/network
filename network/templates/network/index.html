@@ -26,7 +26,7 @@
       <div class="post">
         <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
         {% if post.creator.username == user.username %}
-          <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
+          <button type="button" class="btn btn-outline-dark btn-sm" id="{{ post.id }}">Edit</button>
         {% endif %}
         <p class='post-text'>{{ post.text }}</p>
         <p><span>DATE: {{ post.date }}</span> <span>LIKES: {{ post.likes.count }}</span>

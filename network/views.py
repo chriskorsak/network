@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+import json
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 
@@ -153,3 +155,23 @@ def following(request):
   return render(request, "network/following.html", {
     'page_obj': page_obj
   })
+
+@csrf_exempt
+@login_required(login_url='login')
+def edit_post(request, postId):
+  # print(f"FROM DJANGO PARAMETER:{postId}")
+  user = request.user
+  post = Post.objects.get(pk=postId)
+
+  # make sure post creator is the same as user trying to edit post
+  if user.username == post.creator.username:
+    data = json.loads(request.body)
+    updatedPostText = data.get('postText')
+    post.text = updatedPostText
+    post.save()
+    # data.get('postId')
+    return JsonResponse({"response": "Post updated and saved."})
+  else:
+    return JsonResponse({"response": "You are not the post creator. You can't edit this post."})
+
+
