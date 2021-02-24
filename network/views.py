@@ -160,7 +160,11 @@ def following(request):
 @login_required(login_url='login')
 def edit_post(request, postId):
   user = request.user
-  post = Post.objects.get(pk=postId)
+
+  try:
+    post = Post.objects.get(pk=postId)
+  except Post.DoesNotExist:
+    return JsonResponse({"response": "Post not found."}, status=404)
 
   # make sure post creator is the same as user trying to edit post
   if user.username == post.creator.username:
@@ -169,7 +173,6 @@ def edit_post(request, postId):
     #update post object with updated post text and save to database
     post.text = updatedPostText
     post.save()
-    
     return JsonResponse({"response": "Post updated and saved."})
   else:
     return JsonResponse({"response": "You are not the post creator. You can't edit this post."})

@@ -56,7 +56,7 @@ function editPost(button) {
 
     // fetch(`/edit-post/${postId}`)
     fetch(`/edit-post/${postId}`, {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify({
           postText: editedPostTextVal,
           postId: postId
