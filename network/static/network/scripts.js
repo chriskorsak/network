@@ -23,7 +23,7 @@ function editPost(button) {
   // assign post text element to postText variable
   postText = button.nextElementSibling;
 
-  //get parent of button
+  //get parent element of button
   let post = button.parentNode;
 
   //insert cancel and save butttons before post text
@@ -64,14 +64,12 @@ function editPost(button) {
     })
     .then(response => response.json())
     .then(data => console.log(data))
-    .then(() => {
-      post.replaceChild(postText, editPostText);
-    });
+    .then(postText.innerText = editedPostTextVal)
+    .then(post.replaceChild(postText, editPostText))
 
-    // post.replaceChild(postText, editPostText);
+    //remove cancel/save buttons and enable edit button
     save.remove();
     cancel.remove();
-
     button.disabled = false;
   });
 
