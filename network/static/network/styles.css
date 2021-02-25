@@ -5,3 +5,9 @@ div.post {
   padding: 2%;
   margin: 2%;
 }
+
+
+/* heart icon for liking posts */
+.liked {
+  color: red;
+}

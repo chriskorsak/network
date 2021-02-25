@@ -1,8 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
+  // add click event to all post edit buttons
   let buttons = document.querySelectorAll('button');
   buttons.forEach(function(button) {
     button.addEventListener('click', function() {
       editPost(button);
+    });
+  });
+  // add click event to all like heart icons
+  let likeIcons = document.querySelectorAll('svg');
+  likeIcons.forEach(function(likeIcon) {
+    likeIcon.addEventListener('click', function() {
+      likePost(likeIcon);
     });
   });
 });
@@ -48,9 +56,8 @@ function editPost(button) {
 
   // save edit
   save.addEventListener('click', function() {
-    
-    //get post id from edit button id attribute
-    let postId = button.getAttribute('id');
+    //get parent div post id (the entire post container element)
+    let postId = post.id;
     //get updated post text after user edits
     let editedPostTextVal = editPostText.value;
 
@@ -72,7 +79,13 @@ function editPost(button) {
     cancel.remove();
     button.disabled = false;
   });
+}
 
-
-
+function likePost(likeIcon) {
+  //turn icon red or black when clicked
+  likeIcon.classList.toggle('liked');
+  //get parent div (the entire post container element)
+  let divParent = likeIcon.parentElement.parentElement;
+  let postId = divParent.id;
+  console.log(postId);
 }
