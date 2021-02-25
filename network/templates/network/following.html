@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-  <h1>Following</h1>
+  <h2 class="left-align">Following</h2>
 
   <section>
     <!-- display all posts user is following -->
@@ -14,7 +14,7 @@
         {% endif %}
         <p class='post-text'>{{ post.text }}</p>
         <p>
-          <span>DATE: {{ post.date }}</span>
+          <span>{{ post.date }}</span>
           {% if user.is_authenticated %}
           <!-- like icon with click functionality -->
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="svg-logged-in bi bi-heart {% if user in post.likes.all %}
@@ -36,7 +36,7 @@
       </div>
     {% endfor %}
   </section>
-  <nav class="pagination">
+  <nav class="pagination left-align">
     <ul class="pagination">
       {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>

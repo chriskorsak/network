@@ -25,7 +25,7 @@ function editPost(button) {
   save.classList.add('btn', 'btn-outline-dark', 'btn-sm');
   let cancel = document.createElement('button');
   cancel.innerText = 'cancel';
-  cancel.classList.add('btn', 'btn-outline-dark', 'btn-sm');
+  cancel.classList.add('btn', 'btn-outline-dark', 'btn-sm', 'nudge-button');
 
 
   // assign post text element to postText variable
@@ -41,7 +41,7 @@ function editPost(button) {
   //create textarea and insert/replace postText data
   let editPostText = document.createElement('textarea');
   editPostText.innerText = postText.innerText;
-  editPostText.classList.add('form-control');
+  editPostText.classList.add('form-control', 'post-text');
   post.replaceChild(editPostText, postText);
 
   // cancel edit: add click event to cancel, switch back to paragraph post text

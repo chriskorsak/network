@@ -2,17 +2,20 @@
 {% load static %}
 
 {% block body %}
-  <h1>{{ profileUsername }}</h1>
-  <!-- follow/unfollow profile button -->
-  {% if user.is_authenticated and user.username != profileUsername %}
-    <form action="{% url 'follow-unfollow' profileUsername %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="{{ followMessage }}" class="btn btn-sm btn-primary">
-    </form>
-  {% endif %}
+  <section class="left-align">
+    <h2>{{ profileUsername }}</h2>
+    <!-- follow/unfollow profile button -->
+    {% if user.is_authenticated and user.username != profileUsername %}
+      <form action="{% url 'follow-unfollow' profileUsername %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="{{ followMessage }}" class="btn btn-sm btn-primary">
+      </form>
+      <br>
+    {% endif %}
 
-  <p>Number of followers: <strong>{{ followerCount }}</strong></p>
-  <p>Following: <strong>{{ followingCount }}</strong></p>
+    <p class="follow-count"><strong>{{ followerCount }}</strong>{% if followerCount == 1 %} follower {% else %} followers {% endif %}</p>
+    <p class="follow-count"><strong>{{ followingCount }}</strong> following</p>
+  </section>
 
   <!-- list all profile posts -->
   <section>
@@ -25,7 +28,7 @@
         {% endif %}
         <p class='post-text'>{{ post.text }}</p>
         <p>
-          <span>DATE: {{ post.date }}</span>
+          <span>{{ post.date }}</span>
           {% if user.is_authenticated %}
           <!-- like icon with click functionality -->
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="svg-logged-in bi bi-heart {% if user in post.likes.all %}
@@ -49,7 +52,7 @@
   </section>
   
   
-  <nav class="pagination">
+  <nav class="pagination left-align">
     <ul class="pagination">
       {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>

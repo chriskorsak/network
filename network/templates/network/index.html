@@ -3,12 +3,12 @@
 
 
 {% block body %}
-  <h1>All Posts</h1>
+  <h2 class="left-align">All Posts</h2>
   {% if user.is_authenticated %}
   <!-- create a new post section -->
     <section>
       <div class="post">
-        <h2>New Post</h2>
+        <h3>New Post</h3>
         <form action="{% url 'new-post' %}" method="POST">
           {% csrf_token %}
           <div class="form-group">
@@ -30,7 +30,7 @@
         {% endif %}
         <p class='post-text'>{{ post.text }}</p>
         <p>
-          <span>DATE: {{ post.date }}</span>
+          <span>{{ post.date }}</span>
           {% if user.is_authenticated %}
           <!-- like icon with click functionality -->
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="svg-logged-in bi bi-heart {% if user in post.likes.all %}
@@ -54,7 +54,7 @@
   </section>
 
   <!-- navigation  -->
-  <nav class="pagination">
+  <nav class="pagination left-align">
     <ul class="pagination">
       {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>

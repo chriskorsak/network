@@ -1,7 +1,7 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-
+  <section class="credentials">
     <h2>Login</h2>
 
     {% if message %}
@@ -18,7 +18,7 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Login">
     </form>
-
     Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+  </section>
 
 {% endblock %}
