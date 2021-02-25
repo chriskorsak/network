@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
   // add click event to all like heart icons
-  let likeIcons = document.querySelectorAll('svg');
+  let likeIcons = document.querySelectorAll('.svg-logged-in');
   likeIcons.forEach(function(likeIcon) {
     likeIcon.addEventListener('click', function() {
       likePost(likeIcon);
