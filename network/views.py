@@ -177,4 +177,36 @@ def edit_post(request, postId):
   else:
     return JsonResponse({"response": "You are not the post creator. You can't edit this post."})
 
+@csrf_exempt
+@login_required(login_url='login')
+def like_post(request, postId):
+  user = request.user
+
+  try:
+    post = Post.objects.get(pk=postId)
+  except Post.DoesNotExist:
+    return JsonResponse({"response": "Post not found."}, status=404)
+  
+  data = json.loads(request.body)
+  # postId = data.get('postId')
+
+  #unlike if post already liked
+  if post.likes.filter(username=user.username):
+    post.likes.remove(user)
+    post.save()
+    updatedLikeCount = post.likes.all().count()
+    return JsonResponse({
+      "response": "Post Unliked.",
+      "updatedLikeCount": updatedLikeCount
+    })
+  #like post
+  else:
+    post.likes.add(user)
+    post.save()
+    updatedLikeCount = post.likes.all().count()
+    return JsonResponse({
+      "response": "Post liked.",
+      "updatedLikeCount": updatedLikeCount
+    })
+
 

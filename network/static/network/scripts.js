@@ -84,8 +84,24 @@ function editPost(button) {
 function likePost(likeIcon) {
   //turn icon red or black when clicked
   likeIcon.classList.toggle('liked');
+
   //get parent div (the entire post container element)
   let divParent = likeIcon.parentElement.parentElement;
   let postId = divParent.id;
-  console.log(postId);
+
+  //update post likes using fetch api
+  fetch(`/like-post/${postId}`, {
+    method: 'POST',
+    body: JSON.stringify({
+        postId: postId
+    })
+  })
+  .then(response => response.json())
+  // .then(data => console.log(data))
+  .then(data => {
+    // get number of likes count from page to be updated
+    let postLikesCount = document.querySelector(`#likes-post-${postId}`);
+    let updatedLikeCount = data.updatedLikeCount;
+    postLikesCount.innerText = updatedLikeCount;
+  })
 }
