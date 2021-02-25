@@ -187,6 +187,8 @@ def like_post(request, postId):
   except Post.DoesNotExist:
     return JsonResponse({"response": "Post not found."}, status=404)
   
+  # print(user.likedbyuser)
+
   data = json.loads(request.body)
   # postId = data.get('postId')
 

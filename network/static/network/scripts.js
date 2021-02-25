@@ -97,7 +97,6 @@ function likePost(likeIcon) {
     })
   })
   .then(response => response.json())
-  // .then(data => console.log(data))
   .then(data => {
     // get number of likes count from page to be updated
     let postLikesCount = document.querySelector(`#likes-post-${postId}`);
